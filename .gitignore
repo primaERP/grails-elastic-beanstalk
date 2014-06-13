@@ -34,3 +34,9 @@ Thumbs.db
 
 # AWS credentials file
 credentials.properties
+
+# Eclipse
+/target-eclipse
+
+# SHA files
+*.sha1
