@@ -15,7 +15,7 @@
  */
 
 class AwsElasticBeanstalkGrailsPlugin {
-    def version = "0.3-primaerp"
+    def version = "0.3-primaerp-2"
     def grailsVersion = "2.0 > *"
     def title = "AWS Elastic Beanstalk Integration"
     def author = "Kenneth Liu"

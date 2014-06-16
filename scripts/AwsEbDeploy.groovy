@@ -129,7 +129,7 @@ private String getDescription() {
 
 private String getVersionLabel(warFile) {
     def versionLabelTemplate = config.grails?.plugin?.awsElasticBeanstalk?.versionLabelTemplate
-    deployer.generateVersionLabel(versionLabelTemplate, warFile, metadata.applicationVersion)
+    deployer.generateVersionLabel(versionLabelTemplate, warFile, metadata['app.version'])
 }
 
 private File getAppWarFile(warFilename) {
