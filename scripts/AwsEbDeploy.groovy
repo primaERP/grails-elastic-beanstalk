@@ -71,7 +71,7 @@ target(main: "Deploy Grails WAR file to AWS Elastic Beanstalk") {
     String bucketName = elasticBeanstalk.createStorageLocation().getS3Bucket()
 
     def s3key = uniqueTempWarFileName(appWarFile)
-    uploadToS3(awsCredentials, appWarFile, bucketName, s3key)
+    uploadToS3(awsCredentials, s3EndpointUrl, appWarFile, bucketName, s3key)
 
     //TODO handle case where application does not yet exist - check application? (don't want to autocreate - disable autocreate flag?)
 
@@ -138,12 +138,13 @@ private File getAppWarFile(warFilename) {
     new File(warFilename)
 }
 
-private uploadToS3(credentials, file, bucketName, key) {
+private uploadToS3(credentials, endpoint, file, bucketName, key) {
     final console = grailsConsole // seems to be necessary so the ProgressListener can access the grailsConsole object
     console.addStatus "[${new Date()}] Uploading local WAR file ${file.name} to remote WAR file ${key} in bucket ${bucketName}..."
     String s3key = URLEncoder.encode(key, 'UTF-8')
 
     AmazonS3 s3 = new AmazonS3Client(credentials)
+    s3.setEndpoint(endpoint)
     if (System.getenv('CI')) {
         // Do no show progress in console when running CI (otherwise it generates huge log, e.g. in TravisCI it generates an error)
         s3.putObject(new PutObjectRequest(bucketName, s3key, file))

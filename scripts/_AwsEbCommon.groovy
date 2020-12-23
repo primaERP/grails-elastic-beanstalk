@@ -18,6 +18,8 @@ import com.amazonaws.auth.*
 import com.amazonaws.services.elasticbeanstalk.*
 import com.amazonaws.services.elasticbeanstalk.model.*
 
+import com.amazonaws.SDKGlobalConfiguration
+
 
 /**
 * @author Kenneth Liu
@@ -32,7 +34,7 @@ includeTargets << grailsScript("_GrailsPackage") //needed to access application 
 //def elasticBeanstalk
 //def applicationName
 //def environmentName
-//def serviceEndpointUrl
+//def s3EndpointUrl
 
 
 
@@ -59,6 +61,8 @@ target(initTargetApplicationAndEnvironmentConfig: 'Loads application and environ
 	applicationName = getApplicationName() //set global
 	environmentName = getEnvironmentName() //set global
     templateName = getConfigurationTemplateName() //set global
+    s3EndpointUrl = config.grails?.plugin?.awsElasticBeanstalk?.s3EndpointUrl //set global property
+    System.setProperty(SDKGlobalConfiguration.ENABLE_S3_SIGV4_SYSTEM_PROPERTY, "true")
 }
 
 target(loadAwsCredentials: 'Load AWS credentials from a file or from env') {
